@@ -17,7 +17,7 @@ namespace Financa.Infra.Repositories
 
         public IUnitOfWork UnityOfWork => _context;
 
-        public async Task<T> Adicionar(T model)
+        public async virtual Task<T> Adicionar(T model)
         {
             
             await _context.Set<T>().AddAsync(model); ;

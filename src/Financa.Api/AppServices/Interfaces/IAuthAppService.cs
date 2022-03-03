@@ -5,6 +5,6 @@ namespace Financa.Api.AppServices.Interfaces
     public interface IAuthAppService
     {
         Task<DetalhaUsuarioDto> Registrar(AdicionaUsuarioDto novoUsuario);
-        Task<DetalhaUsuarioDto> Autenticar(LoginDto login);
+        Task<LoginResponseDto> Autenticar(LoginRequestDto login);
     }
 }

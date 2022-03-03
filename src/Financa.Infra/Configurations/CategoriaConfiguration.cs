@@ -13,9 +13,9 @@ namespace Financa.Infra.Configurations
             builder.Property(p => p.Titulo).HasColumnType("VARCHAR(150)");
             builder.Property(p => p.Cor).HasColumnType("VARCHAR(10)");
 
-            builder.HasMany(c => c.Lancamentos)
-                .WithOne(c => c.Categoria)
-                .HasForeignKey(c => c.CategoriaId);
+            //builder.HasMany(c => c.Lancamentos)
+            //    .WithOne(c => c.Categoria)
+            //    .HasForeignKey(c => c.CategoriaId);
         }
     }
 }

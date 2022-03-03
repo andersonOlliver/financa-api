@@ -1,9 +1,11 @@
 ﻿using Financa.Api.AppServices.Interfaces;
+using Financa.Api.Authorization;
 using Financa.Api.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Financa.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class CategoriaController : ControllerBase

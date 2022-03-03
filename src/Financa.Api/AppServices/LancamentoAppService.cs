@@ -17,11 +17,15 @@ namespace Financa.Api.AppServices
             _mapper = mapper;
         }
 
-        public async Task<LancamentoDto> Adicionar(AdicionaLancamentoDto lancamentoDto)
+        public async Task<LancamentoDto> Adicionar(AdicionaLancamentoDto lancamentoDto, Guid? usuarioId)
         {
+            if (usuarioId is null) throw new ApplicationException("Deve informar um usuario");
+
             var lancamento = _mapper.Map<Lancamento>(lancamentoDto);
+            lancamento.UsuarioId = usuarioId.Value;
             await _lancamentoRepository.Adicionar(lancamento);
             await _lancamentoRepository.UnityOfWork.CommitAsync();
+
             return _mapper.Map<LancamentoDto>(lancamento);
         }
 
@@ -48,6 +52,12 @@ namespace Financa.Api.AppServices
         public async Task<ICollection<LancamentoDto>> ObterTodos()
         {
             var lancamentos = await _lancamentoRepository.ObterTodosAsync();
+            return _mapper.Map<ICollection<LancamentoDto>>(lancamentos);
+        }
+
+        public async Task<ICollection<LancamentoDto>> ObterTodos(Guid usuarioId)
+        {
+            var lancamentos = await _lancamentoRepository.ObterTodosAsync(usuarioId);
             return _mapper.Map<ICollection<LancamentoDto>>(lancamentos);
         }
 

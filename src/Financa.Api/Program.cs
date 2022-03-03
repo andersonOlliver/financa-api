@@ -1,9 +1,14 @@
 using Financa.Api.Middlewares;
+using Financa.Api.Models;
 using Financa.Api.Setup;
+using System.Net;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// Add to work in docker container
+//builder.WebHost.UseKestrel(options => { options.Listen(IPAddress.Any, 80); });
+builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 builder.Services.InitializeDatabase(builder.Configuration);
 // Add services to the container.
 builder.Services.InitializeDependencies();
@@ -14,10 +19,11 @@ builder.Services.AddControllers().AddJsonOptions(x =>
 });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwagger();
 builder.Services.AddCors();
 
 var app = builder.Build();
+app.MigrateDatabase();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -30,13 +36,17 @@ if (app.Environment.IsDevelopment())
                 .AllowAnyMethod()
                 .AllowAnyHeader());
 }
+else
+{
+    app.UseHttpsRedirection();
+}
 
-app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.UseMiddleware<ErrorHandlerMiddleware>();
+app.UseMiddleware<JwtMiddleware>();
 
 app.Run();

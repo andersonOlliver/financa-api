@@ -1,31 +1,29 @@
-﻿using Financa.Api.AppServices;
-using Financa.Api.AppServices.Interfaces;
-using Financa.Api.Utils;
-using Financa.Domain.Interfaces.Repositories;
+﻿using Financa.Domain.Interfaces.Repositories;
 using Financa.Domain.Interfaces.Services;
 using Financa.Domain.Services;
 using Financa.Infra.Context;
 using Financa.Infra.Repositories;
+using Microsoft.Extensions.DependencyInjection;
 
-namespace Financa.Api.Setup
+namespace Financa.IoC
 {
-    public static class DependencyInjection
+    public class DependencyInjection
     {
-        public static IServiceCollection InitializeDependencies(this IServiceCollection services)
+        public static IServiceCollection InitializeDependencies(IServiceCollection services)
         {
             services.AddScoped<FinancaContext>();
 
             services.AddScoped<ILancamentoRepository, LancamentoRepository>();
             services.AddScoped<ILancamentoService, LancamentoService>();
-            services.AddScoped<ILancamentoAppService, LancamentoAppService>();
+            //services.AddScoped<ILancamentoAppService, LancamentoAppService>();
 
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-            services.AddScoped<ICategoriaAppService, CategoriaAppService>();
+            //services.AddScoped<ICategoriaAppService, CategoriaAppService>();
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioService, UsuarioService>();
-            services.AddScoped<IAuthAppService, AuthAppService>();
-            services.AddScoped<IJwtUtil, JwtUtil>();
+            //services.AddScoped<IAuthAppService, AuthAppService>();
+            //services.AddScoped<IJwtUtil, JwtUtil>();
 
 
             return services;

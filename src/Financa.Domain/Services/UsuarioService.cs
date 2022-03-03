@@ -19,6 +19,16 @@ namespace Financa.Domain.Services
             _usuarioRepository = usuarioRepository;
         }
 
+        public async Task<Usuario> Buscar(string email, string senha)
+        {
+            var usuario = await _usuarioRepository.BuscarPorEmail(email);
+
+            if (usuario is null || !BCryptNet.Verify(senha, usuario.Senha))
+                throw new ApplicationException("Usuario ou senha incorreto");
+
+            return usuario;
+        }
+
         public async Task<Usuario> Registrar(Usuario usuario)
         {
             if (await _usuarioRepository.EmailJaCadastrado(usuario.Email))

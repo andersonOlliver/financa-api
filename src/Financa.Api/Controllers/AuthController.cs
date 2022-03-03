@@ -35,5 +35,24 @@ namespace Financa.Api.Controllers
             }
 
         }
+
+        [HttpPost("autenticar")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LoginResponseDto))]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+
+        public async Task<IActionResult> AutenticarAsync([FromBody] LoginRequestDto login)
+        {
+            try
+            {
+                var resultado = await _authAppService.Autenticar(login);
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+        }
     }
 }

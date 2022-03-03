@@ -6,7 +6,8 @@ namespace Financa.Api.Models.Usuario
     {
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Nome { get; set; }
-        
+
+        [EmailAddress(ErrorMessage = "Email invalido")]
         [Required(ErrorMessage = "O campo {0} é obrigatório")]
         public string Email { get; set; }
 

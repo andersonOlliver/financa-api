@@ -13,7 +13,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{B1118573-6
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Financa.Domain.Unit.Test", "test\Financa.Domain.Test\Financa.Domain.Unit.Test.csproj", "{BF1C2691-C4A1-4BCB-9B1A-485E38A9DC7A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Financa.Api.Unit.Test", "test\Financa.Api.Test\Financa.Api.Unit.Test.csproj", "{C0364F33-85BD-40D7-B356-DBDC7A7FFD24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Financa.Api.Unit.Test", "test\Financa.Api.Test\Financa.Api.Unit.Test.csproj", "{C0364F33-85BD-40D7-B356-DBDC7A7FFD24}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{EB1B3C0C-99D1-4E11-A643-1C1AD6724668}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Financa.IoC", "src\Financa.IoC\Financa.IoC.csproj", "{991F3665-1F28-4939-9462-DF1536986899}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Financa.CrossCuting", "src\Financa.CrossCuting\Financa.CrossCuting.csproj", "{4529F0A3-EAE1-4B4A-B971-F3F0AA3564CA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +47,18 @@ Global
 		{C0364F33-85BD-40D7-B356-DBDC7A7FFD24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0364F33-85BD-40D7-B356-DBDC7A7FFD24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0364F33-85BD-40D7-B356-DBDC7A7FFD24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EB1B3C0C-99D1-4E11-A643-1C1AD6724668}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EB1B3C0C-99D1-4E11-A643-1C1AD6724668}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EB1B3C0C-99D1-4E11-A643-1C1AD6724668}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EB1B3C0C-99D1-4E11-A643-1C1AD6724668}.Release|Any CPU.Build.0 = Release|Any CPU
+		{991F3665-1F28-4939-9462-DF1536986899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{991F3665-1F28-4939-9462-DF1536986899}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{991F3665-1F28-4939-9462-DF1536986899}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{991F3665-1F28-4939-9462-DF1536986899}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4529F0A3-EAE1-4B4A-B971-F3F0AA3564CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4529F0A3-EAE1-4B4A-B971-F3F0AA3564CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4529F0A3-EAE1-4B4A-B971-F3F0AA3564CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4529F0A3-EAE1-4B4A-B971-F3F0AA3564CA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

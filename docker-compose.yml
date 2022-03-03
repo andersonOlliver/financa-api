@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  financa.api:
+    image: ${DOCKER_REGISTRY-}financaapi
+    build:
+      context: .
+      dockerfile: src/Financa.Api/Dockerfile
+    depends_on:
+      - sqlserver 
+    #networks:
+    #  - financa-network
+
+  sqlserver:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=1Secure*Password1
+    ports:
+      - 1433:1433
+    #networks:
+    #  - financa-network
+#networks:
+#  financa-network:
+#    driver: bridge

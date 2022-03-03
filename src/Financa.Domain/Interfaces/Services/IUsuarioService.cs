@@ -6,6 +6,6 @@ namespace Financa.Domain.Interfaces.Services
     {
         Task<Usuario> Registrar(Usuario usuario);
         //Task<UsuarioRegistradoDto> Registrar(NovoUsuarioDto novoUsuario, string origem);
-        //Task<UsuarioAutenticadoDto> Autenticar(LoginDto login, string enderecoIp);
+        Task<Usuario> Buscar(string email, string senha);
     }
 }

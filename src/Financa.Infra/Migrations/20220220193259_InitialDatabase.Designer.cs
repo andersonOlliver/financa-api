@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Financa.Infra.Migrations
 {
     [DbContext(typeof(FinancaContext))]
-    [Migration("20220211124740_AdicionaUsuario")]
-    partial class AdicionaUsuario
+    [Migration("20220220193259_InitialDatabase")]
+    partial class InitialDatabase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
