@@ -52,7 +52,7 @@ namespace Financa.Domain.Entities
                 {
                     Nome = "Anderson Olliver",
                     Email = "anderson.olliver@gmail.com",
-                    Senha = BCryptNet.HashPassword("12345678");
+                    Senha = BCryptNet.HashPassword("12345678")
             };
             }
         }
