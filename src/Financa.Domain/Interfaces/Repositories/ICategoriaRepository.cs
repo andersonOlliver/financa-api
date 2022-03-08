@@ -2,5 +2,5 @@
 
 namespace Financa.Domain.Interfaces.Repositories
 {
-    public interface ICategoriaRepository: IRepository<Categoria> { }
+    public interface ICategoriaRepository : IRepository<Categoria> { }
 }

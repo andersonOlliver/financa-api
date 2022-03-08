@@ -2,11 +2,6 @@
 using Financa.Domain.Interfaces.Repositories;
 using Financa.Domain.Interfaces.Services;
 using BCryptNet = BCrypt.Net.BCrypt;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Financa.Domain.Services
 {

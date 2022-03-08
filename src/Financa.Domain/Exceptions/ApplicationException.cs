@@ -4,7 +4,7 @@ namespace Financa.Domain.Exceptions
 {
     public class ApplicationException : Exception
     {
-        public ApplicationException():base()
+        public ApplicationException() : base()
         {
 
         }

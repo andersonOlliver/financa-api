@@ -1,4 +1,4 @@
-﻿using Financa.Api.Models.Usuario;
+﻿using Financa.Domain.Dtos.Usuario;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Financa.Api.Controllers

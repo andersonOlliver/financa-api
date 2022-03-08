@@ -14,8 +14,10 @@ namespace Financa.Infra.Context
 
 
         public DbSet<Lancamento> Lancamentos { get; set; }
+        public DbSet<ItemLancamento> ItensLancamento { get; set; }
         public DbSet<Categoria> Categorias { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Cartao> Cartoes { get; set; }
 
         public async Task<bool> CommitAsync()
         {
@@ -35,7 +37,7 @@ namespace Financa.Infra.Context
             var sucesso = await base.SaveChangesAsync() > 0;
             //if (sucesso) await _mediatorHandler.PublicarEventos(this);
 
-            return sucesso; ;
+            return sucesso;
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

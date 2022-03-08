@@ -7,23 +7,25 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Financa.IoC
 {
-    public class DependencyInjection
+    public class Bootstrapper
     {
-        public static IServiceCollection InitializeDependencies(IServiceCollection services)
+        public static IServiceCollection InitializeCrossDependencies(IServiceCollection services)
         {
             services.AddScoped<FinancaContext>();
 
             services.AddScoped<ILancamentoRepository, LancamentoRepository>();
             services.AddScoped<ILancamentoService, LancamentoService>();
-            //services.AddScoped<ILancamentoAppService, LancamentoAppService>();
 
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
-            //services.AddScoped<ICategoriaAppService, CategoriaAppService>();
+            services.AddScoped<ICategoriaService, CategoriaService>();
+
+            services.AddScoped<ICartaoRepository, CartaoRepository>();
+            services.AddScoped<ICartaoService, CartaoService>();
 
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
             services.AddScoped<IUsuarioService, UsuarioService>();
-            //services.AddScoped<IAuthAppService, AuthAppService>();
-            //services.AddScoped<IJwtUtil, JwtUtil>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IJwtService, JwtService>();
 
 
             return services;

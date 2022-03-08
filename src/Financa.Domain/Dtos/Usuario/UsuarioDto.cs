@@ -1,0 +1,16 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Financa.Domain.Dtos.Usuario
+{
+    public class UsuarioDto
+    {
+        public Guid Id { get; set; }
+
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public string Nome { get; set; }
+
+        [EmailAddress(ErrorMessage = "Email invalido")]
+        [Required(ErrorMessage = "O campo {0} é obrigatório")]
+        public string Email { get; set; }
+    }
+}

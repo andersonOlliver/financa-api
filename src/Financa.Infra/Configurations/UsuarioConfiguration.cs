@@ -16,6 +16,10 @@ namespace Financa.Infra.Configurations
             builder.HasMany(c => c.Lancamentos)
                 .WithOne(c => c.Usuario)
                 .HasForeignKey(c => c.UsuarioId);
+
+            builder.HasMany(c => c.Cartoes)
+                .WithOne(c => c.Usuario)
+                .HasForeignKey(c => c.UsuarioId);
         }
     }
 }

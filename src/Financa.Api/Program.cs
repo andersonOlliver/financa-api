@@ -1,7 +1,6 @@
 using Financa.Api.Middlewares;
-using Financa.Api.Models;
 using Financa.Api.Setup;
-using System.Net;
+using Financa.CrossCuting.Models;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,7 +11,11 @@ builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSet
 builder.Services.InitializeDatabase(builder.Configuration);
 // Add services to the container.
 builder.Services.InitializeDependencies();
+
+//AppDomain.CurrentDomain.GetAssemblies().Select(a => a.FullName).ToList().ForEach(a => Console.WriteLine(a));
+
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+//builder.Services.AddAutoMapper(typeof(Program));
 builder.Services.AddControllers().AddJsonOptions(x =>
 {
     x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());

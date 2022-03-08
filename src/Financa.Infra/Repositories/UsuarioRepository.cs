@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Financa.Infra.Repositories
 {
-    public class UsuarioRepository: BaseRepository<Usuario>, IUsuarioRepository
+    public class UsuarioRepository : BaseRepository<Usuario>, IUsuarioRepository
     {
-        public UsuarioRepository(FinancaContext context) : base(context) {}
+        public UsuarioRepository(FinancaContext context) : base(context) { }
 
         public async Task<Usuario?> BuscarPorEmail(string email)
         {

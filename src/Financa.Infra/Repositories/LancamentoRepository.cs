@@ -35,7 +35,7 @@ namespace Financa.Infra.Repositories
         {
             return await _context.Lancamentos.AsNoTracking()
                                              .Include(c => c.Categoria)
-                                             .Where(e => e.Id == usuarioId)
+                                             .Where(e => e.UsuarioId == usuarioId)
                                              .ToListAsync();
         }
     }

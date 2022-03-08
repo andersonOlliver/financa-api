@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
-using Financa.Api.Models.Usuario;
-using Financa.Api.Utils;
+using Financa.Domain.Dtos.Usuario;
 using Financa.Domain.Interfaces.Repositories;
+using Financa.Domain.Interfaces.Services;
 
 namespace Financa.Api.Middlewares
 {
@@ -16,7 +16,7 @@ namespace Financa.Api.Middlewares
             _mapper = mapper;
         }
 
-        public async Task Invoke(HttpContext context, IUsuarioRepository usuarioRepository, IJwtUtil jwtUtils)
+        public async Task Invoke(HttpContext context, IUsuarioRepository usuarioRepository, IJwtService jwtUtils)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             var userId = jwtUtils.ValidateToken(token);

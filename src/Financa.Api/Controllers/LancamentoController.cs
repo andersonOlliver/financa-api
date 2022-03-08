@@ -1,6 +1,6 @@
-﻿using Financa.Api.AppServices.Interfaces;
-using Financa.Api.Authorization;
-using Financa.Api.Models.Lancamento;
+﻿using Financa.Api.Authorization;
+using Financa.Domain.Dtos.Lancamento;
+using Financa.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -11,9 +11,9 @@ namespace Financa.Api.Controllers
     [Route("api/[controller]")]
     public class LancamentoController : BaseController
     {
-        private readonly ILancamentoAppService _lancamentoService;
+        private readonly ILancamentoService _lancamentoService;
 
-        public LancamentoController(ILancamentoAppService lancamentoService)
+        public LancamentoController(ILancamentoService lancamentoService)
         {
             _lancamentoService = lancamentoService;
         }
@@ -44,19 +44,28 @@ namespace Financa.Api.Controllers
             return Ok(resultado);
         }
 
-        [HttpPut("{id}")]
+        [HttpPost("despesa")]
         [Produces("application/json")]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(LancamentoDto))]
-        public async Task<IActionResult> Atualizar(Guid id, [FromBody] LancamentoDto lancamento)
+        public async Task<IActionResult> AdicionaDespesa([FromBody] AdicionaDespesaDto lancamento)
         {
-            var resultado = await _lancamentoService.Atualizar(id, lancamento);
+            var resultado = await _lancamentoService.Adicionar(lancamento, Usuario?.Id);
+            return Ok(resultado);
+        }
+
+        [HttpPut("{id}")]
+        [Produces("application/json")]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(DetalhaLancamentoDto))]
+        public async Task<IActionResult> Atualizar(Guid id, [FromBody] DetalhaLancamentoDto lancamento)
+        {
+            var resultado = await _lancamentoService.AtualizaAsync(id, lancamento);
             return Ok(resultado);
         }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Remover(Guid id)
         {
-            await _lancamentoService.Remover(id);
+            await _lancamentoService.RemoverAsync(id);
             return NoContent();
         }
     }

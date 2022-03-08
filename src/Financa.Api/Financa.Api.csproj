@@ -26,6 +26,7 @@
     <ProjectReference Include="..\Financa.CrossCuting\Financa.CrossCuting.csproj" />
     <ProjectReference Include="..\Financa.Domain\Financa.Domain.csproj" />
     <ProjectReference Include="..\Financa.Infra\Financa.Infra.csproj" />
+    <ProjectReference Include="..\Financa.IoC\Financa.IoC.csproj" />
   </ItemGroup>
 
 </Project>

@@ -22,6 +22,44 @@ namespace Financa.Infra.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Financa.Domain.Entities.Cartao", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<byte>("DiaFechamento")
+                        .HasColumnType("TINYINT");
+
+                    b.Property<byte>("DiaVencimento")
+                        .HasColumnType("TINYINT");
+
+                    b.Property<string>("Limite")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasPrecision(100)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.Property<string>("Titulo")
+                        .IsRequired()
+                        .HasColumnType("VARCHAR(150)");
+
+                    b.Property<Guid>("UsuarioId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UsuarioId");
+
+                    b.ToTable("Cartoes", (string)null);
+                });
+
             modelBuilder.Entity("Financa.Domain.Entities.Categoria", b =>
                 {
                     b.Property<Guid>("Id")
@@ -47,10 +85,48 @@ namespace Financa.Infra.Migrations
                     b.ToTable("Categorias", (string)null);
                 });
 
+            modelBuilder.Entity("Financa.Domain.Entities.ItemLancamento", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime?>("DataAtualizacao")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataCadastro")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("DataLancamento")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("LancamentoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Parcela")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Valor")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasPrecision(100, 2)
+                        .HasColumnType("VARCHAR(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LancamentoId");
+
+                    b.ToTable("ItensLancamento", (string)null);
+                });
+
             modelBuilder.Entity("Financa.Domain.Entities.Lancamento", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid?>("CartaoId")
+                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("CategoriaId")
@@ -84,6 +160,8 @@ namespace Financa.Infra.Migrations
                         .HasColumnType("VARCHAR(100)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CartaoId");
 
                     b.HasIndex("CategoriaId");
 
@@ -123,12 +201,39 @@ namespace Financa.Infra.Migrations
                     b.ToTable("Usuarios", (string)null);
                 });
 
+            modelBuilder.Entity("Financa.Domain.Entities.Cartao", b =>
+                {
+                    b.HasOne("Financa.Domain.Entities.Usuario", "Usuario")
+                        .WithMany("Cartoes")
+                        .HasForeignKey("UsuarioId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Financa.Domain.Entities.ItemLancamento", b =>
+                {
+                    b.HasOne("Financa.Domain.Entities.Lancamento", "Lancamento")
+                        .WithMany("Itens")
+                        .HasForeignKey("LancamentoId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Lancamento");
+                });
+
             modelBuilder.Entity("Financa.Domain.Entities.Lancamento", b =>
                 {
+                    b.HasOne("Financa.Domain.Entities.Cartao", "Cartao")
+                        .WithMany("Lancamentos")
+                        .HasForeignKey("CartaoId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Financa.Domain.Entities.Categoria", "Categoria")
                         .WithMany("Lancamentos")
                         .HasForeignKey("CategoriaId")
-                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("Financa.Domain.Entities.Usuario", "Usuario")
@@ -137,9 +242,16 @@ namespace Financa.Infra.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Cartao");
+
                     b.Navigation("Categoria");
 
                     b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("Financa.Domain.Entities.Cartao", b =>
+                {
+                    b.Navigation("Lancamentos");
                 });
 
             modelBuilder.Entity("Financa.Domain.Entities.Categoria", b =>
@@ -147,8 +259,15 @@ namespace Financa.Infra.Migrations
                     b.Navigation("Lancamentos");
                 });
 
+            modelBuilder.Entity("Financa.Domain.Entities.Lancamento", b =>
+                {
+                    b.Navigation("Itens");
+                });
+
             modelBuilder.Entity("Financa.Domain.Entities.Usuario", b =>
                 {
+                    b.Navigation("Cartoes");
+
                     b.Navigation("Lancamentos");
                 });
 #pragma warning restore 612, 618

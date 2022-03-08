@@ -2,8 +2,8 @@
 
 namespace Financa.Domain.Interfaces.Repositories
 {
-    public interface ILancamentoRepository:IRepository<Lancamento>
+    public interface ILancamentoRepository : IRepository<Lancamento>
     {
-        Task<IEnumerable<Lancamento>> ObterTodosAsync(Guid UsuarioId);
+        Task<IEnumerable<Lancamento>> ObterTodosAsync(Guid usuarioId);
     }
 }

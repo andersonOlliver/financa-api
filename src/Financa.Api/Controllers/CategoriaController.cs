@@ -1,6 +1,6 @@
-﻿using Financa.Api.AppServices.Interfaces;
-using Financa.Api.Authorization;
-using Financa.Api.Models;
+﻿using Financa.Api.Authorization;
+using Financa.Domain.Dtos;
+using Financa.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Financa.Api.Controllers
@@ -10,9 +10,9 @@ namespace Financa.Api.Controllers
     [Route("api/[controller]")]
     public class CategoriaController : ControllerBase
     {
-        private readonly ICategoriaAppService _service;
+        private readonly ICategoriaService _service;
 
-        public CategoriaController(ICategoriaAppService service)
+        public CategoriaController(ICategoriaService service)
         {
             _service = service;
         }

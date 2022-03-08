@@ -24,9 +24,15 @@ namespace Financa.Infra.Configurations
                 .WithMany(u => u.Lancamentos)
                 .HasForeignKey(l => l.UsuarioId);
 
-            //builder.HasMany(c => c.Lancamentos)
-            //    .WithOne(c => c.Categoria)
-            //    .HasForeignKey(c => c.CategoriaId);
+            builder.HasOne(l => l.Cartao)
+                .WithMany(c => c.Lancamentos)
+                .HasForeignKey(p => p.CartaoId)
+                .IsRequired()
+                .OnDelete(deleteBehavior: DeleteBehavior.NoAction);
+
+            builder.HasMany(l => l.Itens)
+                .WithOne(i => i.Lancamento)
+                .HasForeignKey(l => l.LancamentoId);
 
         }
     }

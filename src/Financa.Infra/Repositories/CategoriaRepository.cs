@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Financa.Infra.Repositories
 {
-    public class CategoriaRepository: BaseRepository<Categoria>, ICategoriaRepository
+    public class CategoriaRepository : BaseRepository<Categoria>, ICategoriaRepository
     {
         public CategoriaRepository(FinancaContext context) : base(context)
         {

@@ -1,11 +1,6 @@
-﻿
-using Financa.Api.Models.Usuario;
-using Microsoft.AspNetCore.Http;
+﻿using Financa.Domain.Dtos.Usuario;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Financa.Api.Authorization
 {
@@ -26,8 +21,7 @@ namespace Financa.Api.Authorization
                 return;
 
             // authorization
-            var user = context.HttpContext.Items["User"] as DetalhaUsuarioDto;
-            if (user == null)
+            if (context.HttpContext.Items["User"] is not DetalhaUsuarioDto)
                 context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
         }
     }

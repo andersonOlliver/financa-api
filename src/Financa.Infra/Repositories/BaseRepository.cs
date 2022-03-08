@@ -19,7 +19,7 @@ namespace Financa.Infra.Repositories
 
         public async virtual Task<T> Adicionar(T model)
         {
-            
+
             await _context.Set<T>().AddAsync(model); ;
             return model;
         }
@@ -36,11 +36,16 @@ namespace Financa.Infra.Repositories
             _context.Dispose();
         }
 
+        public async virtual Task<T?> ObterPorId(Guid id, bool track = false)
+        {
+            return track ?
+               await _context.Set<T>().FirstOrDefaultAsync(e => e.Id == id) :
+                await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
+        }
+
         public async virtual Task<T?> ObterPorId(Guid id)
         {
-            return await _context.Set<T>()
-                .AsNoTracking()
-                .FirstOrDefaultAsync(e => e.Id == id);
+            return await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(e => e.Id == id);
         }
 
         public async virtual Task<IEnumerable<T>> ObterTodosAsync()

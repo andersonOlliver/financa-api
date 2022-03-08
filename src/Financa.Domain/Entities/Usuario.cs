@@ -5,6 +5,17 @@ namespace Financa.Domain.Entities
     public class Usuario : Entity
     {
 
+        public string Nome { get; private set; }
+        public string Email { get; private set; }
+        public string Senha { get; private set; }
+
+        // Ef. Rel
+        public ICollection<Lancamento> Lancamentos { get; set; }
+
+        // Ef. Rel
+        public ICollection<Cartao> Cartoes { get; set; }
+
+
         protected Usuario() { }
 
         public Usuario(Guid id) : base(id) { }
@@ -27,12 +38,6 @@ namespace Financa.Domain.Entities
             AplicarSenha(senha);
         }
 
-        public string Nome { get; private set; }
-        public string Email { get; private set; }
-        public string Senha { get; private set; }
-
-        // Ef. Rel
-        public ICollection<Lancamento> Lancamentos { get; set; }
 
         public void AplicarSenha(string senha)
         {
@@ -53,7 +58,7 @@ namespace Financa.Domain.Entities
                     Nome = "Anderson Olliver",
                     Email = "anderson.olliver@gmail.com",
                     Senha = BCryptNet.HashPassword("12345678")
-            };
+                };
             }
         }
     }

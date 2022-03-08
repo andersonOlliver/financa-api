@@ -1,58 +1,78 @@
-﻿using Financa.Domain.Entities;
+﻿using AutoMapper;
+using Financa.Domain.Dtos.Lancamento;
+using Financa.Domain.Entities;
 using Financa.Domain.Interfaces.Repositories;
 using Financa.Domain.Interfaces.Services;
+using static Financa.Domain.Entities.Lancamento;
 
 namespace Financa.Domain.Services
 {
-    public class LancamentoService : ILancamentoService
+    public class LancamentoService : AbstractService<Lancamento, AdicionaLancamentoDto, LancamentoDto, DetalhaLancamentoDto>, ILancamentoService
     {
         private readonly ILancamentoRepository _lancamentoRepository;
+        private readonly ICartaoRepository _cartaoRepository;
+        private readonly IUsuarioRepository _usuarioRepository;
 
-        public LancamentoService(ILancamentoRepository lancamentoRepository)
+        public LancamentoService(ILancamentoRepository lancamentoRepository,
+                                 IMapper mapper,
+                                 ICartaoRepository cartaoRepository,
+                                 IUsuarioRepository usuarioRepository) : base(mapper, lancamentoRepository)
         {
             _lancamentoRepository = lancamentoRepository;
+            _cartaoRepository = cartaoRepository;
+            _usuarioRepository = usuarioRepository;
         }
 
-        public async Task<Lancamento> Adicionar(Lancamento lancamento)
+        public async Task<LancamentoDto> Adicionar(AdicionaLancamentoDto lancamentoDto, Guid? usuarioId)
         {
-            await _lancamentoRepository.Adicionar(lancamento);
-            await _lancamentoRepository.UnityOfWork.CommitAsync();
+            Validar(usuarioId);
+            var lancamento = _mapper.Map<Lancamento>(lancamentoDto);
+
+            var usuario = await _usuarioRepository.ObterPorId(usuarioId!.Value);
+            lancamento.AdicionaUsuario(usuario!);
+
+            await _repository.Adicionar(lancamento);
+            await _repository.UnityOfWork.CommitAsync();
+
+            return _mapper.Map<LancamentoDto>(lancamento);
+        }
+
+        private Lancamento Transformar(AdicionaLancamentoDto lancamentoDto, Guid? usuarioId)
+        {
+            Lancamento lancamento = Transformar(lancamentoDto, usuarioId);
             return lancamento;
         }
 
-        public async Task<Lancamento> Atualizar(Guid id, Lancamento lancamento)
+        private static void Validar(Guid? usuarioId)
         {
-            var fromDB = await ObterPorId(id);
-            if (fromDB is null)
+            if (usuarioId is null) throw new ApplicationException("Deve informar um usuario");
+        }
+
+        public async Task<LancamentoDto> Adicionar(AdicionaDespesaDto lancamentoDto, Guid? usuarioId)
+        {
+            if (usuarioId is null) throw new ApplicationException("Deve informar um usuario");
+
+            var lancamento = new LancamentoBuilder()
+                .FromDto(lancamentoDto)
+                .SetUsuario(await _usuarioRepository.ObterPorId(usuarioId!.Value, track: true))
+                .SetCartao(await _cartaoRepository.ObterPorId(lancamentoDto.Cartao!.Id, track: true))
+                .Build();
+
+            if (lancamentoDto.TipoPagamento == TipoPagamento.Parcelado)
             {
-                throw new ApplicationException("Lançamento informado inválido");
+                lancamento.AdicionaParcelas(lancamentoDto.QuantidadeParcelas ?? 1);
             }
 
-            await _lancamentoRepository.Atualizar(lancamento);
-            await _lancamentoRepository.UnityOfWork.CommitAsync();
-            return lancamento;
+            await _repository.Adicionar(lancamento);
+            await _repository.UnityOfWork.CommitAsync();
+
+            return _mapper.Map<LancamentoDto>(lancamento);
         }
 
-        public async Task<Lancamento?> ObterPorId(Guid id)
+        public async Task<ICollection<LancamentoDto>> ObterTodos(Guid usuarioId)
         {
-            return await _lancamentoRepository.ObterPorId(id);
-        }
-
-        public Task<IEnumerable<Lancamento>> ObterTodos()
-        {
-            return _lancamentoRepository.ObterTodosAsync();
-        }
-
-        public async Task Remover(Guid id)
-        {
-            var lancamento = await ObterPorId(id);
-            if (lancamento == null)
-            {
-                throw new ApplicationException("Lançamento informado inválido");
-            }
-
-            await _lancamentoRepository.Remover(lancamento);
-            await _lancamentoRepository.UnityOfWork.CommitAsync();
+            var lancamentos = await _lancamentoRepository.ObterTodosAsync(usuarioId);
+            return _mapper.Map<ICollection<LancamentoDto>>(lancamentos);
         }
     }
 }

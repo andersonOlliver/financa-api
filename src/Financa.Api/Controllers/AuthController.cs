@@ -1,6 +1,7 @@
-﻿using Financa.Api.AppServices.Interfaces;
-using Financa.Api.Authorization;
-using Financa.Api.Models.Usuario;
+﻿using Financa.Api.Authorization;
+using Financa.Domain.Dtos.Auth;
+using Financa.Domain.Dtos.Usuario;
+using Financa.Domain.Interfaces.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Financa.Api.Controllers
@@ -9,9 +10,9 @@ namespace Financa.Api.Controllers
     [ApiController]
     public class AuthController : BaseController
     {
-        private readonly IAuthAppService _authAppService;
+        private readonly IAuthService _authAppService;
 
-        public AuthController(IAuthAppService authAppService)
+        public AuthController(IAuthService authAppService)
         {
             _authAppService = authAppService;
         }
