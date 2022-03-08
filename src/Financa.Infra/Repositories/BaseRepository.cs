@@ -34,6 +34,7 @@ namespace Financa.Infra.Repositories
         public void Dispose()
         {
             _context.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public async virtual Task<T?> ObterPorId(Guid id, bool track = false)

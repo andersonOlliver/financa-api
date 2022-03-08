@@ -50,18 +50,13 @@ namespace Financa.Domain.Services
 
         public async Task<LancamentoDto> Adicionar(AdicionaDespesaDto lancamentoDto, Guid? usuarioId)
         {
-            if (usuarioId is null) throw new ApplicationException("Deve informar um usuario");
+            Validar(usuarioId);
 
             var lancamento = new LancamentoBuilder()
                 .FromDto(lancamentoDto)
                 .SetUsuario(await _usuarioRepository.ObterPorId(usuarioId!.Value, track: true))
                 .SetCartao(await _cartaoRepository.ObterPorId(lancamentoDto.Cartao!.Id, track: true))
                 .Build();
-
-            if (lancamentoDto.TipoPagamento == TipoPagamento.Parcelado)
-            {
-                lancamento.AdicionaParcelas(lancamentoDto.QuantidadeParcelas ?? 1);
-            }
 
             await _repository.Adicionar(lancamento);
             await _repository.UnityOfWork.CommitAsync();

@@ -2,6 +2,9 @@
 {
     public enum TipoPagamento
     {
-        Vista, Parcelado
+        Dinheiro = 1,
+        Debito = 2, 
+        CreditoVista = 3,
+        CreditoParcelado = 4
     }
 }

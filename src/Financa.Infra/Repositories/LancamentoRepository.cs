@@ -13,7 +13,7 @@ namespace Financa.Infra.Repositories
 
         public override Task<Lancamento> Adicionar(Lancamento model)
         {
-            model.Categoria = _context.Categorias.Find(model.CategoriaId) ?? model.Categoria;
+            model.AdicionaCategoria(_context.Categorias.Find(model.CategoriaId) ?? model.Categoria);
             return base.Adicionar(model);
         }
 

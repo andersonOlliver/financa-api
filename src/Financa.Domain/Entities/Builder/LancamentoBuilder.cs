@@ -7,7 +7,7 @@ namespace Financa.Domain.Entities
     {
         public class LancamentoBuilder
         {
-            private Lancamento _lancamento;
+            private readonly Lancamento _lancamento;
 
             public LancamentoBuilder()
             {
@@ -16,6 +16,7 @@ namespace Financa.Domain.Entities
 
             public Lancamento Build()
             {
+                _lancamento.Validar();
                 return _lancamento;
             }
 
@@ -24,13 +25,13 @@ namespace Financa.Domain.Entities
                 return this.SetValor(despesaDto.Valor)
                     .SetTitulo(despesaDto.Titulo)
                     .SetDescricao(despesaDto.Descricao)
-                    .SetTipoLancamento(TipoLancamento.Despesa);
-                    //.SetParcelas(despesaDto.QuantidadeParcelas ?? 1);
+                    .SetTipoLancamento(TipoLancamento.Despesa)
+                    .SetParcelas(despesaDto.QuantidadeParcelas ?? 1);
             }
 
             public LancamentoBuilder SetUsuario(Usuario? usuario)
             {
-                if(usuario is not null)
+                if (usuario is not null)
                     _lancamento.AdicionaUsuario(usuario);
                 return this;
             }
@@ -40,10 +41,10 @@ namespace Financa.Domain.Entities
                 _lancamento.AdicionaCategoria(categoria);
                 return this;
             }
-            
+
             public LancamentoBuilder SetCartao(Cartao? cartao)
             {
-                if(cartao is not null)
+                if (cartao is not null)
                     _lancamento.AdicionaCartao(cartao);
                 return this;
             }
@@ -59,19 +60,19 @@ namespace Financa.Domain.Entities
                 _lancamento.Titulo = titulo;
                 return this;
             }
-            
-            public LancamentoBuilder SetDescricao(string descricao)
+
+            public LancamentoBuilder SetDescricao(string? descricao)
             {
                 _lancamento.Descricao = descricao;
                 return this;
             }
-            
+
             public LancamentoBuilder SetTipoLancamento(TipoLancamento tipoLancamento)
             {
                 _lancamento.TipoLancamento = tipoLancamento;
                 return this;
             }
-            
+
             public LancamentoBuilder SetParcelas(int quantidadeParcela)
             {
                 _lancamento.AdicionaParcelas(quantidadeParcela);

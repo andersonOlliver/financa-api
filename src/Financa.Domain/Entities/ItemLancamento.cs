@@ -3,13 +3,20 @@ namespace Financa.Domain.Entities
 {
     public class ItemLancamento : Entity
     {
-        public int Parcela { get; set; }
-        public decimal Valor { get; set; }
-        public DateTime DataLancamento { get; set; }
-        public Guid LancamentoId { get; set; }
-        public virtual Lancamento Lancamento { get; set; }
+        public int Parcela { get; private set; }
+        public decimal Valor { get; private set; }
+        public DateTime DataLancamento { get; private set; }
+        public Guid LancamentoId { get; private set; }
+        public virtual Lancamento Lancamento { get; private set; }
 
-        public ItemLancamento() : base()
+        protected ItemLancamento() : base()
         { }
+
+        public ItemLancamento(int parcela, decimal valor, DateTime dataLancamento): base()
+        {
+            Parcela = parcela;
+            Valor = valor;
+            DataLancamento = dataLancamento;
+        }
     }
 }
